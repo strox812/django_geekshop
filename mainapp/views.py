@@ -29,9 +29,17 @@ def products(request):
         'links_menu': links_menu
     }
 
-
     return render(request, 'mainapp/products.html', context)
+
 def contact(request):
     return render(request, 'mainapp/contact.html')
 
-# Create your views here.
+from .models import ProductCategory, Product
+
+def main(request):
+    title = 'главная'
+
+    products = Product.objects.all()[:4]
+
+    content = {'title': title, 'products': products}
+    return render(request, 'mainapp/index.html', content)
