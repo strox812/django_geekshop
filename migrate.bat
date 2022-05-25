@@ -1,0 +1,2 @@
+python C:\django_geekshop\manage.py migrate
+pause
