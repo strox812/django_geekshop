@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from mainapp.models import ProductCategory, Product
+from mainapp.models import Category, Product
 #from django.contrib.auth.models import User
 
 import json, os
@@ -14,9 +14,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         categories = load_from_json('categories')
 
-        ProductCategory.objects.all().delete()
+        Category.objects.all().delete()
         for category in categories:
-            new_category = ProductCategory(**category)
+            new_category = Category(**category)
             new_category.save()
 
         products = load_from_json('products')
@@ -25,7 +25,7 @@ class Command(BaseCommand):
         for product in products:
             category_name = product["category"]
             # Получаем категорию по имени
-            _category = ProductCategory.objects.get(name=category_name)
+            _category = Category.objects.get(name=category_name)
             # Заменяем название категории объектом
             product['category'] = _category
             new_product = Product(**product)
