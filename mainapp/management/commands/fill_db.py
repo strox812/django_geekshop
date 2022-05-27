@@ -1,37 +1,49 @@
-from django.core.management.base import BaseCommand
-from mainapp.models import Category, Product
-#from django.contrib.auth.models import User
+import json
 
-import json, os
+from django.core.management import BaseCommand
+from django.conf import settings
 
-JSON_PATH = 'mainapp/json'
+from authapp.models import ShopUser
+from mainapp.models import Category
 
-def load_from_json(file_name):
-    with open(os.path.join(JSON_PATH, file_name + '.json'), 'r') as infile:
-        return json.load(infile)
+from mainapp.models import Product
+
 
 class Command(BaseCommand):
+
+    @staticmethod
+    def _load_data_from_file(self, file_name):
+        with open(f'{settings.BASE_DIR}/mainapp/json/{file_name}.json') as json_file:
+            # json_string = json_file.read()
+            # return json.loads(json_string)
+            return json.load(json_file)
+
     def handle(self, *args, **options):
-        categories = load_from_json('categories')
-
         Category.objects.all().delete()
-        for category in categories:
-            new_category = Category(**category)
-            new_category.save()
 
-        products = load_from_json('products')
+        categories_list = self._load_data_from_file('categories')
+
+        categories_batch = []
+        for cat in categories_list:
+            categories_batch.append(
+                Category(
+                    name=cat.get('name'),
+                    description=cat.get('description')
+                )
+            )
+
+        Category.objects.bulk_create(categories_batch)
 
         Product.objects.all().delete()
-        for product in products:
-            category_name = product["category"]
-            # Получаем категорию по имени
-            _category = Category.objects.get(name=category_name)
-            # Заменяем название категории объектом
-            product['category'] = _category
-            new_product = Product(**product)
-            new_product.save()
 
-        # Создаем суперпользователя при помощи менеджера модели
-from authapp.models import ShopUser
+        products_list = self._load_data_from_file('products')
 
-super_user = ShopUser.objects.create_superuser('django', 'django@geekshop.local', 'geekbrains', age=33)
+        for prod in products_list:
+            _cat = Category.objects.get(name__icontains=prod.get('category'))
+            prod['category'] = _cat
+
+            Product.objects.create(**prod)
+
+        shop_user = ShopUser.objects.create_superuser(username='django', email='django@gb.local', age=31, password='geekbrains')
+        #shop_user.set_password('geekbrains')
+        #shop_user.save()
