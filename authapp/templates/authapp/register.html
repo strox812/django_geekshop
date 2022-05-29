@@ -1,12 +1,11 @@
 {% extends 'authapp/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block content %}
-    <form class="form-horizontal" action="{% url 'auth:register' %}" method="post" enctype="multipart/form-data">
+    <form class="form-horizontal col-10" " action="{% url 'authapp:register' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ register_form.as_p }}
-        <br>
-        <input class="form-control" type="submit" value="зарегистрироваться">
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Зарегистрироваться</button>
     </form>
+    <a class="btn btn-info" href="{% url 'authapp:login' %}" style="width: 100">Войти</a>
 {% endblock %}
-
