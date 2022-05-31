@@ -9,17 +9,19 @@
            {% if request.resolver_match.url_name == 'contact' %}class="active"{% endif %}>контакты</a>
     </li>
     {% if user.is_authenticated %}
-    <li>
-        <a href="{% url 'authapp:edit' %}">{{ user.first_name|default:'Пользователь' }}</a>
-    </li>
-    <li>
-        <a href="{% url 'authapp:logout' %}">выход</a>
-    </li>
+        <li>
+            <a href="{% url 'authapp:edit' %}">{{ user.first_name|default:'Пользователь' }}</a>
+        </li>
+        <li>
+            <a href="{% url 'authapp:logout' %}">выход</a>
+        </li>
     {% else %}
-    <li>
-        <a href="{% url 'authapp:login' %}">вход</a>
-    </li>
+        <li>
+            <a href="{% url 'authapp:login' %}">вход</a>
+        </li>
     {% endif %}
 </ul>
 <a href="#" class="search"></a>
-<a href="#" class="basket"></a>
+<a href="{% url 'basket:list' %}" class="basket">
+    <span style="display: block; margin-left: 30px; color: black">{{ basket }}</span>
+</a>
