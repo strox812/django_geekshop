@@ -39,8 +39,8 @@ def products(request, pk=None):
 
     context = {
         'links_menu': links_menu,
-        'basket': get_basket(request.user)
-        'hot_product': Product.objects.all().order_by('?').first()
+        'basket': get_basket(request.user),
+        'hot_product': Product.objects.all().order_by('?').first(),
         'same_products': Product.objects.all().order_by('?')[3:5]
     }
     return render(request, 'mainapp/products.html', context)

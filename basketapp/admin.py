@@ -6,7 +6,7 @@ from basketapp.models import Basket
 
 # admin.site.register(Basket)
 @admin.register(Basket)
-class BasketAdmin(admin.ModelAdmin:
+class BasketAdmin(admin.ModelAdmin):
     list_display = ('product', 'user', 'total_price', 'quantity')
     list_filter = ('product', )
 
