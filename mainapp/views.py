@@ -5,7 +5,7 @@ from basketapp.models import Basket
 
 def get_basket(user):
     basket_list = 0
-    if user.is_autenticated:
+    if user.is_authenticated:
         basket_list = sum(list(Basket.objects.filter(user=request.user).values_list('quantity', float=True)))
     return  basket_list
 
