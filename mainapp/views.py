@@ -16,7 +16,6 @@ def index(request):
     }
     return render(request, 'mainapp/index.html', context)
 
-
 def products(request, pk=None):
     links_menu = Category.objects.all()
     if pk is not None:
