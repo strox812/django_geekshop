@@ -19,3 +19,18 @@ class Basket(models.Model):
         verbose_name = 'корзина'
         verbose_name_plural = 'корзины'
         ordering = ('created_at',)
+
+    @property
+    def product_cost(self): # self.product_cost
+        return self.product.price * self.quantity
+
+    @property
+    def total_quantity(self):
+        _items = Basket.objects.filter(user=self.user)
+        return sum(list(_items.values_list('quantity', flat=true)))
+
+    @property
+    def total_cost(self):
+        _items = Basket.objects.filter(user=self.user)
+        return sum(list(map(lambda x: x.product_cost, _items)))
+

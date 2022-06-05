@@ -4,6 +4,9 @@
 {% block content %}
     <form class="form-horizontal col-10" " action="{% url 'authapp:login' %}" method="post">
         {% csrf_token %}
+        {% if next %}
+            <input type="hidden" value="{{ next }}" name="next">
+        {% endif %}
         {{ form.as_p }}
         <button class="btn btn-primary" type="submit">Войти</button>
     </form>
