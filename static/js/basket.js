@@ -10,4 +10,15 @@ $(document).ready(function(){
             }
         });
     });
+
+//    $('.basket_list').on(types: 'click', selector: '.add-quantity', data: function(){
+//    let pk = $(this).attr(name:'data-pk');
+//        let quantity = parseInt($(this).attr(name: 'data-quantity')) + 1;
+//        $.ajax(url:{
+//            url: '/basket/edit/' + pk + '/' + quantity + '/',
+//            success: function(data){
+//                $('.basket_list').html(data.result);
+//            }
+//        });
+//    });
 });
