@@ -41,6 +41,7 @@ def products(request, pk=None):
     }
     return render(request, 'mainapp/products.html', context)
 
+
 def product(request, pk):
     product_item = get_object_or_404(Product, pk=pk)
     context = {
@@ -67,5 +68,3 @@ def main(request):
         'products': products
     }
     return render(request, 'mainapp/index.html', context)
-
-

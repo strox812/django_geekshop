@@ -7,7 +7,8 @@ def get_basket(user):
     if user.is_authenticated:
         basket_list = (Basket.objects.filter(user=user))
 
-    return  basket_list
+    return basket_list
+
 
 def get_hot_product():
     return Product.objects.all().order_by('?').first()
