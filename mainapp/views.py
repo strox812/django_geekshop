@@ -41,7 +41,7 @@ def products(request, pk=None):
     }
     return render(request, 'mainapp/products.html', context)
 
-def product(request, pk)
+def product(request, pk):
     product_item = get_object_or_404(Product, pk=pk)
     context = {
         'links_menu': Category.object.all(),

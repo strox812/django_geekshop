@@ -5,7 +5,7 @@ from mainapp.models import Product
 def get_basket(user):
     basket_list = []
     if user.is_authenticated:
-        basket_list = (Basket.objects.filter(user=user)
+        basket_list = (Basket.objects.filter(user=user))
 
     return  basket_list
 
