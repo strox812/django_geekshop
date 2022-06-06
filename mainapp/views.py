@@ -8,7 +8,7 @@ from mainapp.services import get_basket, get_hot_product, get_same_products
 def index(request):
     context = {
         'products': Product.objects.all()[:4],
-        'basket': get_basket(request.user)
+        'basket': get_basket(request.user),
     }
     return render(request, 'mainapp/index.html', context)
 
@@ -65,6 +65,6 @@ def main(request):
 
     context = {
         'title': title,
-        'products': products
+        'products': products,
     }
     return render(request, 'mainapp/index.html', context)
