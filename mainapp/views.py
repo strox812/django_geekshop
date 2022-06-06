@@ -49,7 +49,7 @@ def product(request, pk):
         'product': product_item,
         'basket': get_basket(request.user),
     }
-    return render(request, mainapp/product.html, context)
+    return render(request, 'mainapp/product.html', context)
 
 
 def contact(request):
