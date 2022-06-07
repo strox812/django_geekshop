@@ -134,6 +134,15 @@ class ProductDeleteView(AccessMixin, DeleteView):
     model = Product
     template_name = 'adminapp/product_delete_confirm.html'
 
+    def get_success_url(self):
+        category_pk = self.get_object().category_id
+        return reverse('adminapp:products_read', args=[category_pk])
+
+    def delete(self, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.is_active = False
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def product_detail(request):
