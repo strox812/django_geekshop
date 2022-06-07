@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import user_passes_test
 from adminapp.forms import UserAdminEditForm, ProductEditForm
 from authapp.models import ShopUser
@@ -59,6 +59,9 @@ class UserUpdateView(AccessMixin, UpdateView):
     model = ShopUser
     template_name = 'adminapp/user_form.html'
     form_class = UserAdminEditForm
+
+    def get_success_url(self):
+        return reverse('adminapp:user_update', args=[self.kwargs.get('pk')])
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -120,13 +123,13 @@ def product_create(request, pk):
     return render(request, 'adminapp/product_form.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)
-def product_update():
+def product_update(request):
     return None
 
 @user_passes_test(lambda u: u.is_superuser)
-def product_delete():
+def product_delete(request):
     return None
 
-
-def product_detail():
+@user_passes_test(lambda u: u.is_superuser)
+def product_detail(request):
     return None
