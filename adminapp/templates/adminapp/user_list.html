@@ -7,7 +7,7 @@
                 новый пользователь
             </a>
         </button>
-        {% for object in objects %}
+        {% for object in object_list %}
             <div
                     class="user_record {% if not object.is_active %}not_active{% endif %}">
                 <img
@@ -49,6 +49,23 @@
                     {{ object.last_login }}
                 </div>
             </div>
-        {% endfor%}
+        {% endfor %}
+
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}"><< Prev</a>
+            {% endif %}
+<!--                <span>Страница {{ products.number }} из {{ products.paginator.num_pages }}</span>-->
+            {% for item in page_obj.paginator.page_range %}
+                {% if item == page_obj.number %}
+                    <span>{{ item }}</span>
+                {% else %}
+                    <a href="?page={{ item }}">{{ item }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next >></a>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

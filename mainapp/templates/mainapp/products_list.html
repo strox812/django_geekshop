@@ -27,9 +27,9 @@
 <!--                <span>Страница {{ products.number }} из {{ products.paginator.num_pages }}</span>-->
                 {% for item in products.paginator.page_range %}
                     {% if item == products.number %}
-                    <span>{{ item }}</span>
+                        <span>{{ item }}</span>
                     {% else %}
-                    <a href="?page={{ item }}">{{ item }}</a>
+                        <a href="?page={{ item }}">{{ item }}</a>
                     {% endif %}
                 {% endfor %}
                 {% if products.has_next %}
