@@ -84,7 +84,8 @@ def user_delete(request, pk):
 
 class CategoryCreateView(AccessMixin, CreateView):
     model = Category
-    form_class = CategoryEditForm
+    # form_class = CategoryEditForm
+    fields = ('name', 'description',)
     success_url = reverse_lazy('adminapp:category_read')
     template_name = 'adminapp/category_create.html'
 
