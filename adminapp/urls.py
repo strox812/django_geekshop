@@ -16,9 +16,10 @@ urlpatterns = [
     path('categories/read/', adminapp.category_read, name='category_read'),
     path('categories/update/<pk>/', adminapp.category_update, name='category_update'),
     path('categories/delete/<pk>/', adminapp.category_delete, name='category_delete'),
-    #
-    # path('', adminapp., name=''),
-    # path('', adminapp., name=''),
-    # path('', adminapp., name=''),
-    # path('', adminapp., name=''),
+
+    path('categories/products/read/<pk>', adminapp.products_read, name='products_read'),
+    path('products/create/<pk>/', adminapp.product_create, name='product_create'),
+    path('products/update/<pk>/', adminapp.product_update, name='product_update'),
+    path('products/delete/<pk>/', adminapp.product_delete, name='product_delete'),
+    path('products/detail/<pk>/', adminapp.product_detail, name='product_detail'),
 ]
