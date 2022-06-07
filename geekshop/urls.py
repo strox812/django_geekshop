@@ -22,7 +22,7 @@ from mainapp import views
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('admin/',include('adminapp.urls', namespace='adminapp'))
+    path('admin/',include('adminapp.urls', namespace='adminapp')),
     path('', views.index, name='index'),
 
     path('products/', include('mainapp.urls', namespace='products')),
