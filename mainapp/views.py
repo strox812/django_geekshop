@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
 from mainapp.models import Category, Product
 from mainapp.services import get_basket, get_hot_product, get_same_products
 
@@ -14,7 +13,7 @@ def index(request):
     return render(request, 'mainapp/index.html', context)
 
 
-def products(request, pk=None):
+def products(request, pk=None, page=1):
     links_menu = Category.objects.all()
     if pk is not None:
         if pk == 0:
