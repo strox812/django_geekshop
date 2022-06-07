@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from mainapp.models import Category, Product
 from mainapp.services import get_basket, get_hot_product, get_same_products
@@ -23,12 +24,24 @@ def products(request, pk=None):
             category_item = get_object_or_404(Category, pk=pk)
             products_list = Product.objects.filter(category_id=pk)
 
+        page = request.GET.get('page') # 1
+        paginator = Paginator(products_list, 2)
+        try:
+            paginated_products = paginator.page(page)
+        except PageNotAnInteger:
+            paginated_products = paginator.page(1)
+        except EmptyPage:
+            paginated_products = paginator.page(paginator.num_pages)
+
         context = {
             'links_menu': links_menu,
-            'products': products_list,
+            'products': paginated_products,
             'category': category_item,
             'basket': get_basket(request.user),
         }
+        page = request.GET.get('page')
+        paginator = Paginator(products_list, 2)
+
 
         return render(request, 'mainapp/products_list.html', context)
     hot_product = get_hot_product()
