@@ -126,10 +126,20 @@ def product_create(request, pk):
 def product_update(request):
     return None
 
-@user_passes_test(lambda u: u.is_superuser)
-def product_delete(request):
-    return None
+# @user_passes_test(lambda u: u.is_superuser)
+# def product_delete(request):
+#     return None
 
-@user_passes_test(lambda u: u.is_superuser)
-def product_detail(request):
-    return None
+class ProductDeleteView(AccessMixin, DeleteView):
+    model = Product
+    template_name = 'adminapp/product_delete_confirm.html'
+
+
+# @user_passes_test(lambda u: u.is_superuser)
+# def product_detail(request):
+#     return None
+
+class ProductDetailsView(AccessMixin, DetailView):
+    model = Product
+    template_name = 'adminapp/product_info.html'
+
