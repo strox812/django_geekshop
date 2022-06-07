@@ -1,22 +1,24 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import user_passes_test
 from adminapp.forms import UserAdminEditForm, ProductEditForm
 from authapp.models import ShopUser
 from mainapp.models import Category, Product
 
 
+@user_passes_test(lamda u: u.is_superuser)
 def user_create(request):
     return None
 
-
+@user_passes_test(lamda u: u.is_superuser)
 def user_read(request):
     context = {
         'objects': ShopUser.objects.all().order_by('is_active', 'is_superuser')
     }
     return render(request, 'adminapp/user_list.html', context)
 
-
+@user_passes_test(lamda u: u.is_superuser)
 def user_update(request, pk):
     user_item = get_object_or_404(ShopUser, pk=pk)
     if request.method == 'POST':
@@ -32,7 +34,7 @@ def user_update(request, pk):
     }
     return render(request, 'adminapp/user_form.html', context)
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def user_delete(request, pk):
     user_item = get_object_or_404(ShopUser, pk=pk)
     if request.method == 'POST':
@@ -46,26 +48,26 @@ def user_delete(request, pk):
     }
     return render(request, 'adminapp/user_delete_confirm.html', context)
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def category_create(request):
     return None
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def category_read(request):
     context = {
         'objects_list': Category.objects.all().order_by('-is_active')
     }
     return render(request, 'adminapp/category_list.html', context)
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def category_update(request, pk):
     return None
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def category_delete(request, pk):
     return None
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def products_read(request, pk):
     category_item = get_object_or_404(Category, pk=pk)
     products_list = Product.objects.filter(category_id=pk)
@@ -75,6 +77,7 @@ def products_read(request, pk):
     }
     return render(request, 'adminapp/products_list.html', context)
 
+@user_passes_test(lambda u: u.is_superuser)
 def product_create(request, pk):
     category_item = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -89,11 +92,11 @@ def product_create(request, pk):
     }
     return render(request, 'adminapp/product_form.html', context)
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def product_update():
     return None
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def product_delete():
     return None
 
